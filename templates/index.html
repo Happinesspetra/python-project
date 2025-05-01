@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Python Portfolio</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="nav-logo">HappiBo</a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-content">
+            <h1 class="gradient-text">Hello, I'm {{ name }}</h1>
+            <p class="subtitle">{{ about }}</p>
+            <div class="btn-container">
+                <a href="#projects" class="btn">View My Work</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="weather-time">
+            <div class="search-container">
+                <input type="text" placeholder="Search projects..." class="search-bar" id="searchInput">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            <div class="weather-info" id="weatherTime"></div>
+        </div>
+
+        <section class="section features" id="skills">
+            <h2 class="section-title">My Skills</h2>
+            <ul class="feature-list">
+                {% for skill in skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="section projects" id="projects">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="project-grid">
+                {% for project in projects %}
+                <a href="{{ project.link }}" target="_blank" class="project-card" data-search="{{ project.title|lower }} {{ project.description|lower }} {{ project.tags|join(' ')|lower }}">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <div class="tags">
+                        {% for tag in project.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="project-link-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <h3>Need help?</h3>
+            <button id="closeChatbot" class="chatbot-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chatbot-message bot-message">
+                Hello! I'm your portfolio assistant. How can I help you today?
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <button id="openChatbot" class="chatbot-toggle">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Me</h3>
+                <p>A passionate developer and designer creating digital solutions that solve real-world problems.</p>
+                <div class="social-links">
+                    <a href="http://www.github.com/Happinesspetra" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/happiness-michael-26b20a244" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://x.com/Happine47968980" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/happibo_" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:michaelhappiness70@gmail.com"><i class="fas fa-envelope"></i> michaelhappiness70@gmail.com</a></li>
+                    <li><a href="tel:+2348103543491"><i class="fas fa-phone"></i> +234 (810) 354-3491</a></li>
+                    <li><a href="https://maps.google.com?q=Abuja,Nigeria" target="_blank"><i class="fas fa-map-marker-alt"></i> Abuja, Nigeria</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 My Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            searchResults.innerHTML = '';
+            
+            if (searchTerm.length < 2) {
+                searchResults.style.display = 'none';
+                projectCards.forEach(card => card.style.display = 'block');
+                return;
+            }
+            
+            let hasResults = false;
+            
+            // Search in projects
+            projectCards.forEach(card => {
+                const cardData = card.getAttribute('data-search');
+                if (cardData.includes(searchTerm)) {
+                    hasResults = true;
+                    
+                    // Create result item
+                    const title = card.querySelector('h3').textContent;
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.textContent = title;
+                    resultItem.addEventListener('click', () => {
+                        card.scrollIntoView({ behavior: 'smooth' });
+                        // Highlight the card
+                        card.style.boxShadow = '0 0 0 3px var(--primary-color)';
+                        setTimeout(() => {
+                            card.style.boxShadow = 'var(--shadow)';
+                        }, 2000);
+                        searchResults.style.display = 'none';
+                    });
+                    searchResults.appendChild(resultItem);
+                    
+                    // Show the card
+                    card.style.display = 'block';
+                } else {
+                    // Hide the card if it doesn't match
+                    card.style.display = 'none';
+                }
+            });
+            
+            if (hasResults) {
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.style.display = 'none';
+                const noResults = document.createElement('div');
+                noResults.className = 'search-result-item';
+                noResults.textContent = 'No projects found';
+                searchResults.appendChild(noResults);
+                searchResults.style.display = 'block';
+            }
+        });
+
+        // Close search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Weather and time display
+        const weatherTime = document.getElementById('weatherTime');
+        
+        function updateDateTime() {
+            const now = new Date();
+            const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+            weatherTime.innerHTML = `${date} • ${time}`;
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+
+        // Chatbot functionality
+        const chatbotContainer = document.getElementById('chatbotContainer');
+        const openChatbot = document.getElementById('openChatbot');
+        const closeChatbot = document.getElementById('closeChatbot');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const sendMessage = document.getElementById('sendMessage');
+        
+        openChatbot.addEventListener('click', () => {
+            chatbotContainer.classList.add('active');
+        });
+        
+        closeChatbot.addEventListener('click', () => {
+            chatbotContainer.classList.remove('active');
+        });
+        
+        function addMessage(message, isBot = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isBot ? 'chatbot-message bot-message' : 'chatbot-message user-message';
+            messageDiv.textContent = message;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+        
+        sendMessage.addEventListener('click', () => {
+            const message = chatbotInput.value.trim();
+            if (message) {
+                addMessage(message);
+                chatbotInput.value = '';
+                
+                // Simple bot responses
+                setTimeout(() => {
+                    let response;
+                    if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+                        response = "Hello there! How can I help you today?";
+                    } else if (message.toLowerCase().includes('project')) {
+                        response = "You can view all my projects in the projects section. Is there a specific type of project you're interested in?";
+                    } else if (message.toLowerCase().includes('contact')) {
+                        response = "You can find all my contact information in the footer section. Would you like me to scroll there for you?";
+                    } else if (message.toLowerCase().includes('skill')) {
+                        response = "My skills are listed in the skills section. I specialize in web development and design.";
+                    } else {
+                        response = "I'm a simple bot and might not understand complex questions. Feel free to contact me directly through the contact information provided!";
+                    }
+                    addMessage(response, true);
+                }, 1000);
+            }
+        });
+        
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage.click();
+            }
+        });
+    </script>
+</body>
+</html>
